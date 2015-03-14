@@ -1,0 +1,12 @@
+AllCops:
+  Exclude:
+    - 'yubioath.gemspec'
+
+Metrics/LineLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
