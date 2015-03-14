@@ -1,4 +1,4 @@
-# Yubioath
+# YubiOATH
 
 TODO: Write a gem description
 

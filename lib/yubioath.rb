@@ -1,3 +1,3 @@
-module Yubioath
+module YubiOATH
   # Your code goes here...
 end
