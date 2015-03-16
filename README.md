@@ -4,19 +4,11 @@ Securely manage your 2FA tokens using your Yubikey NEO
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install `yubioath` globally using RubyGems:
 
-```ruby
-gem 'yubioath'
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install yubioath
+$ gem install yubioath
+```
 
 ## Usage
 
