@@ -1,6 +1,6 @@
 # YubiOATH
 
-TODO: Write a gem description
+Securely manage your 2FA tokens using your Yubikey NEO
 
 ## Installation
 
