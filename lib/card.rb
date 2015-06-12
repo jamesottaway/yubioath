@@ -1,11 +1,9 @@
 require 'smartcard'
 
 class Card
-  def initialize
+  def initialize(name:)
     Context.new do |context|
       begin
-        fail 'Unable to find exactly ONE smart card' unless context.readers.count == 1
-        name = context.readers.first
         card = context.card(name)
         yield card
       ensure
