@@ -1,9 +1,12 @@
+require 'yubioath'
 require 'bindata'
 
 module YubiOATH
   class Select
     def self.send(aid:, to:)
-      Response.read(to.transmit(Request.new(aid: aid).to_binary_s))
+      response = ::YubiOATH::Response.read(to.transmit(Request.new(aid: aid).to_binary_s))
+      throw unless response.success?
+      Response.read(response.data)
     end
 
     class Request < BinData::Record
