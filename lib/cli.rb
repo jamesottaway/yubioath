@@ -31,7 +31,7 @@ class CLI < Thor
     CARD.tap do |card|
       YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
       token = YubiOATH::Calculate.send(name: name, timestamp: Time.now, to: card)
-      STDOUT.puts token.code
+      STDOUT.print token.code
     end
   end
 end
