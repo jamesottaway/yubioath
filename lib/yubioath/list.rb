@@ -16,14 +16,12 @@ module YubiOATH
       uint8 :p2, value: 0x00
     end
 
-    class Code < BinData::Record
-      uint8 :name_tag
-      uint8 :name_length
-      string :name, read_length: :name_length
-    end
-
     class Response < BinData::Record
-      array :codes, type: :code, read_until: :eof
+      array :codes, read_until: :eof do
+        uint8 :name_tag
+        uint8 :name_length
+        string :name, read_length: :name_length
+      end
     end
   end
 end
