@@ -13,14 +13,14 @@ module YubiOATH
       uint8 :p2, value: 0x00
     end
 
-    class ListEntry < BinData::Primitive
-      uint8 :name_list_tag, assert: 0x72
+    class Code < BinData::Record
+      uint8 :name_tag
       uint8 :name_length
-      string :name, read_length: -> { name_length - 1 }
+      string :name, read_length: :name_length
     end
 
     class Response < BinData::Record
-      array :codes, type: :list_entry
+      array :codes, type: :code, read_until: :eof
     end
   end
 end
