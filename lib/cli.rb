@@ -44,4 +44,14 @@ class CLI < Thor
       throw unless response.success?
     end
   end
+
+  desc 'delete NAME', 'remove the OTP token called NAME'
+  def delete(name)
+    require 'yubioath/delete'
+    CARD.tap do |card|
+      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
+      response = YubiOATH::Delete.send(name: name, to: card)
+      throw unless response.success?
+    end
+  end
 end
