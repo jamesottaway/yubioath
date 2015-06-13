@@ -2,10 +2,14 @@ require 'smartcard'
 
 class Card
   def initialize(name:)
-    Context.new do |context|
+    @name = name
+  end
+
+  def tap(&block)
+    Context.tap do |context|
       begin
-        card = context.card(name)
-        yield card
+        card = context.card(@name)
+        block.call(card)
       ensure
         card.disconnect unless card.nil?
       end
@@ -13,9 +17,9 @@ class Card
   end
 
   class Context
-    def initialize
+    def self.tap(&block)
       context = Smartcard::PCSC::Context.new
-      yield context
+      block.call(context)
     ensure
       context.release
     end
