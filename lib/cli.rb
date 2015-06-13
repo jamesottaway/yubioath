@@ -34,4 +34,14 @@ class CLI < Thor
       STDOUT.print token.code
     end
   end
+
+  desc 'add NAME SECRET', 'add a new OTP secret'
+  def add(name, secret)
+    require 'yubioath/put'
+    CARD.tap do |card|
+      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
+      response = YubiOATH::Put.send(name: name, secret: secret, algorithm: 'SHA256', type: 'totp', digits: 6, to: card)
+      throw unless response.success?
+    end
+  end
 end
