@@ -1,7 +1,7 @@
 require 'yubioath'
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class Put
     ALGORITHMS = {'SHA1' => 0x01, 'SHA256' => 0x02}
     TYPES = {'hotp' => 0x10, 'totp' => 0x20}

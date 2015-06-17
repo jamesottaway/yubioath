@@ -1,7 +1,7 @@
 require 'yubioath'
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class Delete
     def self.send(name:, to:)
       data = Request::Data.new(name: name)

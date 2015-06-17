@@ -1,7 +1,7 @@
 require 'yubioath'
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class Reset
     def self.send(to:)
       ::YubiOATH::Response.read(to.transmit(Request.new.to_binary_s))

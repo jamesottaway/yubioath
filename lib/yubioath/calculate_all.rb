@@ -1,7 +1,7 @@
 require 'yubioath'
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class CalculateAll
     def self.send(timestamp:, to:)
       data = Request::Data.new(timestamp: timestamp.to_i / 30)

@@ -1,6 +1,6 @@
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class Response < BinData::Record
     count_bytes_remaining :data_length
     string :data, read_length: -> { data_length - 2 }

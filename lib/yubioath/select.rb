@@ -1,7 +1,7 @@
 require 'yubioath'
 require 'bindata'
 
-module YubiOATH
+class YubiOATH
   class Select
     def self.send(aid:, to:)
       response = ::YubiOATH::Response.read(to.transmit(Request.new(aid: aid).to_binary_s))
