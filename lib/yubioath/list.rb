@@ -1,4 +1,3 @@
-require 'yubioath'
 require 'bindata'
 
 class YubiOATH
@@ -10,7 +9,7 @@ class YubiOATH
     end
 
     class Request < BinData::Record
-      uint8 :cla, value: CLA
+      uint8 :cla, value: 0x00
       uint8 :ins, value: 0xA1
       uint8 :p1, value: 0x00
       uint8 :p2, value: 0x00
