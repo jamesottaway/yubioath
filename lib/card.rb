@@ -1,9 +1,18 @@
 require 'smartcard'
+require 'yubioath'
 
 class Card
   def initialize(name:)
     @name = name
   end
+
+  def yubioath
+    tap do |card|
+      yield YubiOATH.new(card)
+    end
+  end
+
+  private
 
   def tap(&block)
     Context.tap do |context|
