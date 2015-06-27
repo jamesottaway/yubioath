@@ -1,19 +1,13 @@
 require 'thor'
 require 'card'
-require 'yubioath'
-require 'yubioath/select'
 
 class CLI < Thor
-  CARD = Card.new(name: 'Yubico Yubikey NEO OTP+CCID')
-
   package_name 'yubioath'
 
   desc 'list', 'list current OTP tokens'
   def list
-    require 'yubioath/calculate_all'
-    CARD.tap do |card|
-      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
-      all = YubiOATH::CalculateAll.send(timestamp: Time.now, to: card)
+    card.yubioath do |yubioath|
+      all = yubioath.calculate_all(timestamp: Time.now)
 
       STDOUT.puts
       STDOUT.puts 'YubiOATH Tokens:'
@@ -27,31 +21,31 @@ class CLI < Thor
 
   desc 'token NAME', 'get the current OTP value for NAME'
   def token(name)
-    require 'yubioath/calculate'
-    CARD.tap do |card|
-      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
-      token = YubiOATH::Calculate.send(name: name, timestamp: Time.now, to: card)
+    card.yubioath do |yubioath|
+      token = yubioath.calculate(name: name, timestamp: Time.now)
       STDOUT.print token.code
     end
   end
 
   desc 'add NAME SECRET', 'add a new OTP secret'
   def add(name, secret)
-    require 'yubioath/put'
-    CARD.tap do |card|
-      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
-      response = YubiOATH::Put.send(name: name, secret: secret, algorithm: 'SHA256', type: 'totp', digits: 6, to: card)
+    card.yubioath do |yubioath|
+      response = yubioath.put(name: name, secret: secret, algorithm: 'SHA256', type: 'totp', digits: 6)
       throw unless response.success?
     end
   end
 
   desc 'delete NAME', 'remove the OTP token called NAME'
   def delete(name)
-    require 'yubioath/delete'
-    CARD.tap do |card|
-      YubiOATH::Select.send(aid: ::YubiOATH::AID, to: card)
-      response = YubiOATH::Delete.send(name: name, to: card)
+    card.yubioath do |yubioath|
+      response = yubioath.send(name: name)
       throw unless response.success?
     end
+  end
+
+  private
+
+  def card
+    @card ||= Card.new(name: 'Yubico Yubikey NEO OTP+CCID')
   end
 end
