@@ -5,17 +5,6 @@ class YubiOATH
     ALGORITHMS = {'SHA1' => 0x01, 'SHA256' => 0x02}
     TYPES = {'hotp' => 0x10, 'totp' => 0x20}
 
-    def self.send(name:, secret:, algorithm:, type:, digits:, to:)
-      data = Request::Data.new(
-        name: name,
-        key_algorithm: (ALGORITHMS[algorithm] | TYPES[type]),
-        digits: digits,
-        secret: secret,
-      )
-      request = Request.new(data: data.to_binary_s)
-      ::YubiOATH::Response.read(to.transmit(request.to_binary_s))
-    end
-
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0x01

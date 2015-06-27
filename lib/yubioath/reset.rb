@@ -2,10 +2,6 @@ require 'bindata'
 
 class YubiOATH
   class Reset
-    def self.send(to:)
-      ::YubiOATH::Response.read(to.transmit(Request.new.to_binary_s))
-    end
-
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0x04

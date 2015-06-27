@@ -2,12 +2,6 @@ require 'bindata'
 
 class YubiOATH
   class List
-    def self.send(to:)
-      response = ::YubiOATH::Response.read(to.transmit(Request.new.to_binary_s))
-      throw unless response.success?
-      Response.read(response.data)
-    end
-
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0xA1

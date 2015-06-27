@@ -2,14 +2,6 @@ require 'bindata'
 
 class YubiOATH
   class Calculate
-    def self.send(name:, timestamp:, to:)
-      data = Request::Data.new(name: name, timestamp: timestamp.to_i / 30)
-      request = Request.new(data: data.to_binary_s)
-      response = ::YubiOATH::Response.read(to.transmit(request.to_binary_s))
-      throw unless response.success?
-      Response.read(response.data)
-    end
-
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0xA2
