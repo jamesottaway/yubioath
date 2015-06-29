@@ -7,3 +7,12 @@ Metrics/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+Style/SpaceAroundOperators:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  Enabled: false
+
+Style/TrailingComma:
+  EnforcedStyleForMultiline: comma
