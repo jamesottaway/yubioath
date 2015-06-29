@@ -7,6 +7,3 @@ Metrics/LineLength:
 
 Style/Documentation:
   Enabled: false
-
-Metrics/LineLength:
-  Enabled: false
