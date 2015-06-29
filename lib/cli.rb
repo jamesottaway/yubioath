@@ -38,7 +38,7 @@ class CLI < Thor
   desc 'delete NAME', 'remove the OTP token called NAME'
   def delete(name)
     card.yubioath do |yubioath|
-      response = yubioath.send(name: name)
+      response = yubioath.delete(name: name)
       throw unless response.success?
     end
   end
