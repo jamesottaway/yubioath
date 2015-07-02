@@ -15,7 +15,7 @@ class YubiOATH
     request = Calculate::Request.new(data: data.to_binary_s)
     response = Response.read(@card.transmit(request.to_binary_s))
     throw unless response.success?
-    Calculate::Response.read(response.data)
+    Calculate::Response.read(response.data).code.to_s
   end
 
   def calculate_all(timestamp:)

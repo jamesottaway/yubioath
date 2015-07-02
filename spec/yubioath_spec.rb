@@ -24,6 +24,31 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
     end
   end
 
+  let(:params) { {algorithm: :sha256, type: :totp, digits: 6} }
+  let(:t1) { Time.parse('2013-01-01T00:00:00Z') }
+  let(:t2) { Time.parse('2014-06-15T12:00:00Z') }
+  let(:t3) { Time.parse('2015-12-31T23:59:59Z') }
+
+  it 'calculates OTP tokens' do
+    yubioath do |applet|
+      { 'foo' => '123', 'bar' => '456', 'qux' => '789' }.each do |name, secret|
+        applet.put(name: name, secret: secret, **params)
+      end
+
+      expect(applet.calculate(name: 'foo', timestamp: t1)).to eq '947217'
+      expect(applet.calculate(name: 'bar', timestamp: t1)).to eq '576740'
+      expect(applet.calculate(name: 'qux', timestamp: t1)).to eq '129094'
+
+      expect(applet.calculate(name: 'foo', timestamp: t2)).to eq '904502'
+      expect(applet.calculate(name: 'bar', timestamp: t2)).to eq '958008'
+      expect(applet.calculate(name: 'qux', timestamp: t2)).to eq '552048'
+
+      expect(applet.calculate(name: 'foo', timestamp: t3)).to eq '204573'
+      expect(applet.calculate(name: 'bar', timestamp: t3)).to eq '329294'
+      expect(applet.calculate(name: 'qux', timestamp: t3)).to eq '169757'
+    end
+  end
+
   after do
     yubikey.tap do |card|
       unless @skip
