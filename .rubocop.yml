@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - 'yubioath.gemspec'
@@ -16,3 +18,9 @@ Style/SpaceInsideHashLiteralBraces:
 
 Style/TrailingComma:
   EnforcedStyleForMultiline: comma
+
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+Style/IndentHash:
+  Enabled: false
