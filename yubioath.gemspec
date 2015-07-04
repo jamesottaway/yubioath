@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'yubioath'
-  spec.version       = '0.1.1'
+  spec.version       = '1.0.0'
   spec.authors       = ['James Ottaway']
   spec.email         = ['yubioath@james.ottaway.io']
   spec.summary       = 'Securely manage your 2FA tokens using your Yubikey NEO'
