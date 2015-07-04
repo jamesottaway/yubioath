@@ -27,7 +27,9 @@ class YubiOATH
     request = CalculateAll::Request.new(data: data.to_binary_s)
     response = Response.read(@card.transmit(request.to_binary_s))
     raise RequestFailed, response unless response.success?
-    CalculateAll::Response.read(response.data)
+    CalculateAll::Response.read(response.data)[:codes].map do |code|
+      [code.name, code.code.to_s]
+    end.to_h
   end
 
   def delete(name:)

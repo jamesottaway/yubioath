@@ -63,6 +63,32 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
     end
   end
 
+  it 'calculates all OTP tokens' do
+    yubioath do |applet|
+      { 'foo' => '123', 'bar' => '456', 'qux' => '789' }.each do |name, secret|
+        applet.put(name: name, secret: secret, **params)
+      end
+
+      expect(applet.calculate_all(timestamp: t1)).to eq({
+        'foo' => '947217',
+        'bar' => '576740',
+        'qux' => '129094',
+      })
+
+      expect(applet.calculate_all(timestamp: t2)).to eq({
+        'foo' => '904502',
+        'bar' => '958008',
+        'qux' => '552048',
+      })
+
+      expect(applet.calculate_all(timestamp: t3)).to eq({
+        'foo' => '204573',
+        'bar' => '329294',
+        'qux' => '169757',
+      })
+    end
+  end
+
   after do
     yubikey.tap do |card|
       unless @skip
