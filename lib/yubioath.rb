@@ -4,6 +4,8 @@ require 'yubioath/response'
 
 class YubiOATH
   AID = [0xA0, 0x00, 0x00, 0x05, 0x27, 0x21, 0x01, 0x01]
+  ALGORITHMS = { sha1: 0x1, sha256: 0x2 }
+  TYPES = { hotp: 0x1, totp: 0x2 }
 
   RequestFailed = Class.new(StandardError)
 
@@ -44,7 +46,8 @@ class YubiOATH
   def put(name:, secret:, algorithm:, type:, digits:)
     data = Put::Request::Data.new(
       name: name,
-      key_algorithm: (Put::ALGORITHMS[algorithm] | Put::TYPES[type]),
+      type: TYPES.fetch(type),
+      algorithm: ALGORITHMS.fetch(algorithm),
       digits: digits,
       secret: secret,
     )
