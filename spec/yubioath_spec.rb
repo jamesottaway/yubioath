@@ -25,6 +25,20 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
   end
 
   let(:params) { {algorithm: :sha256, type: :totp, digits: 6} }
+  it 'lists OTP tokens and their configurations' do
+    yubioath do |applet|
+      expect(applet.list).to eq({})
+
+      expect(applet.put(name: 'foo', secret: nil, **params)).to be_success
+      expect(applet.put(name: 'bar', secret: nil, **params)).to be_success
+
+      expect(applet.list).to eq({
+        'foo' => { type: :totp, algorithm: :sha256 },
+        'bar' => { type: :totp, algorithm: :sha256 },
+      })
+    end
+  end
+
   let(:t1) { Time.parse('2013-01-01T00:00:00Z') }
   let(:t2) { Time.parse('2014-06-15T12:00:00Z') }
   let(:t3) { Time.parse('2015-12-31T23:59:59Z') }

@@ -40,7 +40,12 @@ class YubiOATH
     request = List::Request.new.to_binary_s
     response = Response.read(@card.transmit(request))
     raise RequestFailed, response unless response.success?
-    List::Response.read(response.data)
+    List::Response.read(response.data)[:codes].map do |code|
+      [code.name, {
+        type: TYPES.key(code.type),
+        algorithm: ALGORITHMS.key(code.algorithm),
+      }]
+    end.to_h
   end
 
   def put(name:, secret:, algorithm:, type:, digits:)
