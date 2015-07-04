@@ -13,7 +13,9 @@ class YubiOATH
       array :codes, read_until: :eof do
         uint8 :name_tag
         uint8 :name_length
-        string :name, read_length: :name_length
+        bit4 :type
+        bit4 :algorithm
+        string :name, read_length: -> { name_length - 1 }
       end
     end
   end
