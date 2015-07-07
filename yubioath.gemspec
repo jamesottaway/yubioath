@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = '1.0.0'
   spec.authors       = ['James Ottaway']
   spec.email         = ['yubioath@james.ottaway.io']
-  spec.summary       = 'Securely manage your 2FA tokens using your Yubikey NEO'
+  spec.summary       = 'A mostly-complete Ruby implementation of the YubiOATH applet protocol'
   spec.homepage      = 'https://github.com/jamesottaway/yubioath'
   spec.license       = 'MIT'
 
