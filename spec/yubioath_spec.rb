@@ -24,13 +24,12 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
     end
   end
 
-  let(:params) { {algorithm: :SHA256, type: :TOTP, digits: 6} }
   it 'lists OTP tokens and their configurations' do
     yubioath do |applet|
       expect(applet.list).to eq({})
 
-      expect(applet.put(name: 'foo', secret: nil, **params)).to be_success
-      expect(applet.put(name: 'bar', secret: nil, **params)).to be_success
+      expect(applet.put(name: 'foo', secret: nil)).to be_success
+      expect(applet.put(name: 'bar', secret: nil)).to be_success
 
       expect(applet.list).to eq({
         'foo' => {type: :TOTP, algorithm: :SHA256},
@@ -45,8 +44,8 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
 
   it 'calculates OTP tokens' do
     yubioath do |applet|
-      { 'foo' => '123', 'bar' => '456', 'qux' => '789' }.each do |name, secret|
-        applet.put(name: name, secret: secret, **params)
+      {'foo' => '123', 'bar' => '456', 'qux' => '789'}.each do |name, secret|
+        applet.put(name: name, secret: secret)
       end
 
       expect(applet.calculate(name: 'foo', timestamp: t1)).to eq '947217'
@@ -66,7 +65,7 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
   it 'calculates all OTP tokens' do
     yubioath do |applet|
       { 'foo' => '123', 'bar' => '456', 'qux' => '789' }.each do |name, secret|
-        applet.put(name: name, secret: secret, **params)
+        applet.put(name: name, secret: secret)
       end
 
       expect(applet.calculate_all(timestamp: t1)).to eq({

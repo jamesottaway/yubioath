@@ -14,7 +14,7 @@ class YubiOATH
     select(AID)
   end
 
-  def calculate(name:, timestamp:)
+  def calculate(name:, timestamp: Time.now)
     data = Calculate::Request::Data.new(name: name, timestamp: timestamp.to_i / 30)
     request = Calculate::Request.new(data: data.to_binary_s)
     response = Response.read(@card.transmit(request.to_binary_s))
@@ -22,7 +22,7 @@ class YubiOATH
     Calculate::Response.read(response.data).code.to_s
   end
 
-  def calculate_all(timestamp:)
+  def calculate_all(timestamp: Time.now)
     data = CalculateAll::Request::Data.new(timestamp: timestamp.to_i / 30)
     request = CalculateAll::Request.new(data: data.to_binary_s)
     response = Response.read(@card.transmit(request.to_binary_s))
@@ -50,7 +50,7 @@ class YubiOATH
     end.to_h
   end
 
-  def put(name:, secret:, algorithm:, type:, digits:)
+  def put(name:, secret:, algorithm: :SHA256, type: :TOTP, digits: 6)
     data = Put::Request::Data.new(
       name: name,
       type: TYPES.fetch(type),
