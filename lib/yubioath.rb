@@ -62,8 +62,8 @@ class YubiOATH
     Response.read(@card.transmit(request.to_binary_s))
   end
 
-  def reset
-    Response.read(@card.transmit(Reset::Request.new.to_binary_s))
+  def reset(confirm: false)
+    Response.read(@card.transmit(Reset::Request.new.to_binary_s)) if confirm
   end
 
   private
