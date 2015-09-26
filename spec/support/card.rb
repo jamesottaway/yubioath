@@ -8,7 +8,7 @@ class Card
   def tap
     Context.tap do |context|
       begin
-        card = context.card(@name)
+        card = context.card(@name, :shared)
         yield card
       ensure
         card.disconnect unless card.nil?
