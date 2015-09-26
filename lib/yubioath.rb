@@ -4,8 +4,8 @@ require 'yubioath/response'
 
 class YubiOATH
   AID = [0xA0, 0x00, 0x00, 0x05, 0x27, 0x21, 0x01, 0x01]
-  ALGORITHMS = { sha1: 0x1, sha256: 0x2 }
-  TYPES = { hotp: 0x1, totp: 0x2 }
+  ALGORITHMS = { SHA1: 0x1, SHA256: 0x2 }
+  TYPES = { HOTP: 0x1, TOTP: 0x2 }
 
   RequestFailed = Class.new(StandardError)
 
