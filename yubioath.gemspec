@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = 'yubioath'
-  spec.version       = '1.0.0'
+  spec.version       = '1.1.0'
   spec.authors       = ['James Ottaway']
   spec.email         = ['yubioath@james.ottaway.io']
   spec.summary       = 'A mostly-complete Ruby implementation of the YubiOATH applet protocol'
