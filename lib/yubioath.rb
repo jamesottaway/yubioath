@@ -12,18 +12,21 @@ class YubiOATH
     select(AID)
   end
 
-  def calculate(name:, timestamp: Time.now)
+  def calculate(name:, timestamp:)
     data = Calculate::Request::Data.new(name: name, timestamp: timestamp.to_i / 30)
     request = Calculate::Request.new(data: data.to_binary_s)
-    response = Response.read(@card.transmit(request.to_binary_s))
-    Calculate::Response.read(response.data).code.to_s
+    bytes = @card.transmit(request.to_binary_s)
+    response = Calculate::Response.read(bytes)
+    response.code.to_s
   end
 
-  def calculate_all(timestamp: Time.now)
+  def calculate_all(timestamp:)
     data = CalculateAll::Request::Data.new(timestamp: timestamp.to_i / 30)
     request = CalculateAll::Request.new(data: data.to_binary_s)
-    response = Response.read(@card.transmit(request.to_binary_s))
-    CalculateAll::Response.read(response.data)[:codes].map do |code|
+    bytes = @card.transmit(request.to_binary_s)
+    response = CalculateAll::Response.read(bytes)
+
+    response[:codes].map do |code|
       [code.name, code.code.to_s]
     end.to_h
   end
@@ -31,13 +34,16 @@ class YubiOATH
   def delete(name:)
     data = Delete::Request::Data.new(name: name)
     request = Delete::Request.new(data: data.to_binary_s)
-    Response.read(@card.transmit(request.to_binary_s))
+    bytes = @card.transmit(request.to_binary_s)
+    Response.read(bytes)
   end
 
   def list
-    request = List::Request.new.to_binary_s
-    response = Response.read(@card.transmit(request))
-    List::Response.read(response.data)[:codes].map do |code|
+    request = List::Request.new
+    bytes = @card.transmit(request.to_binary_s)
+    response = List::Response.read(bytes)
+
+    response[:codes].map do |code|
       [code.name, {
         type: TYPES.key(code.type),
         algorithm: ALGORITHMS.key(code.algorithm),
@@ -54,18 +60,22 @@ class YubiOATH
       secret: secret,
     )
     request = Put::Request.new(data: data.to_binary_s)
-    Response.read(@card.transmit(request.to_binary_s))
+    bytes = @card.transmit(request.to_binary_s)
+    Response.read(bytes)
   end
 
   def reset(confirm: false)
-    Response.read(@card.transmit(Reset::Request.new.to_binary_s)) if confirm
+    return false unless confirm
+    request = Reset::Request.new
+    bytes = @card.transmit(request.to_binary_s)
+    Response.read(bytes)
   end
 
   private
 
   def select(aid)
-    request = Select::Request.new(aid: aid).to_binary_s
-    response = Response.read(@card.transmit(request))
-    Select::Response.read(response.data)
+    request = Select::Request.new(aid: aid)
+    bytes = @card.transmit(request.to_binary_s)
+    Select::Response.read(bytes)
   end
 end
