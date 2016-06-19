@@ -2,6 +2,16 @@ require 'bindata'
 
 class YubiOATH
   class Select
+    def initialize(card)
+      @card = card
+    end
+
+    def call(aid:)
+      request = Request.new(aid: aid)
+      bytes = @card.transmit(request.to_binary_s)
+      Response.read(bytes)
+    end
+
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0xA4

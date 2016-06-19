@@ -2,6 +2,21 @@ require 'bindata'
 
 class YubiOATH
   class CalculateAll
+    def initialize(card)
+      @card = card
+    end
+
+    def call(timestamp:)
+      data = Request::Data.new(timestamp: timestamp.to_i / 30)
+      request = Request.new(data: data.to_binary_s)
+      bytes = @card.transmit(request.to_binary_s)
+      response = Response.read(bytes)
+
+      response[:codes].map do |code|
+        [code.name, code.code.to_s]
+      end.to_h
+    end
+
     class Request < BinData::Record
       uint8 :cla, value: 0x00
       uint8 :ins, value: 0xA4
