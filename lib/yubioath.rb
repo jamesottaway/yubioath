@@ -1,6 +1,4 @@
-require 'bindata'
 require 'yubioath/instructions'
-require 'yubioath/response'
 
 class YubiOATH
   AID = [0xA0, 0x00, 0x00, 0x05, 0x27, 0x21, 0x01, 0x01]
