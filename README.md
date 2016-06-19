@@ -4,12 +4,24 @@ A mostly-complete Ruby implementation of the [YubiOATH applet protocol](https://
 
 ## Usage
 
-The `YubiOATH` class accepts a `card`, which must respond to `#transmit(apdu)`.
+The `YubiOATH` class accepts a `card`, which must respond to `#transmit(apdu)`. See [costan/smartcard](https://github.com/costan/smartcard) for more info.
 
-You probably want to use [costan/smartcard](https://github.com/costan/smartcard).
-
-```ruby
+``` ruby
 yubioath = YubiOATH.new(card)
+
+yubioath.put(name: 'foo', secret: '123456')            # => true
+yubioath.calculate(name: 'foo', timestamp: Time.now)   # => '237846'
+
+yubioath.put(name: 'bar', secret: '345678')   # => true
+yubioath.put(name: 'qux', secret: '567890')   # => true
+yubioath.list.keys                            # => ['foo', 'bar', 'qux']
+yubioath.calculate_all(timestamp: Time.now)   # => {'foo' => '234526', 'bar' => '293857', 'qux' => '934856'}
+
+yubioath.delete('qux')   # => true
+yubioath.list.keys   # => ['foo', 'bar']
+
+yubioath.reset        # => true
+yubioath.list.empty?  # => true
 ```
 
 ### Calculate
