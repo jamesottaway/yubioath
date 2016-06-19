@@ -88,6 +88,33 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
     end
   end
 
+  it 'deletes OTP tokens' do
+    yubioath do |applet|
+      applet.put(name: 'foo', secret: nil)
+      applet.put(name: 'bar', secret: nil)
+
+      expect(applet.list.keys).to match_array(['foo', 'bar'])
+
+      expect(applet.delete(name: 'foo')).to eq(true)
+      expect(applet.delete(name: 'bar')).to eq(true)
+
+      expect(applet.list.keys).to eq([])
+    end
+  end
+
+  it 'resets the applet' do
+    yubioath do |applet|
+      applet.put(name: 'foo', secret: nil)
+      applet.put(name: 'bar', secret: nil)
+
+      expect(applet.list.keys).to match_array(['foo', 'bar'])
+
+      expect(applet.reset).to eq(true)
+
+      expect(applet.list.keys).to eq([])
+    end
+  end
+
   after do
     yubikey.tap do |card|
       unless @skip
