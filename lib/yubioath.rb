@@ -1,4 +1,10 @@
-require 'yubioath/instructions'
+require 'yubioath/calculate'
+require 'yubioath/calculate_all'
+require 'yubioath/delete'
+require 'yubioath/list'
+require 'yubioath/put'
+require 'yubioath/reset'
+require 'yubioath/select'
 
 class YubiOATH
   AID = [0xA0, 0x00, 0x00, 0x05, 0x27, 0x21, 0x01, 0x01]

@@ -1,7 +1,0 @@
-require 'yubioath/calculate'
-require 'yubioath/calculate_all'
-require 'yubioath/delete'
-require 'yubioath/list'
-require 'yubioath/put'
-require 'yubioath/reset'
-require 'yubioath/select'
