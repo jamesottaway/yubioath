@@ -10,7 +10,7 @@ class YubiOATH
     def call
       request = Reset::Request.new
       bytes = @card.transmit(request.to_binary_s)
-      Response.read(bytes)
+      Response.read(bytes).success?
     end
 
     class Request < BinData::Record

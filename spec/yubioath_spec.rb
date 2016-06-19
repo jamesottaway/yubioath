@@ -28,8 +28,8 @@ RSpec.describe(YubiOATH, :aggregate_failures, order: :defined) do
     yubioath do |applet|
       expect(applet.list).to eq({})
 
-      expect(applet.put(name: 'foo', secret: nil)).to be_success
-      expect(applet.put(name: 'bar', secret: nil)).to be_success
+      expect(applet.put(name: 'foo', secret: nil)).to eq(true)
+      expect(applet.put(name: 'bar', secret: nil)).to eq(true)
 
       expect(applet.list).to eq({
         'foo' => {type: :TOTP, algorithm: :SHA256},

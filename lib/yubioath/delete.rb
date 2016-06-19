@@ -11,7 +11,7 @@ class YubiOATH
       data = Request::Data.new(name: name)
       request = Request.new(data: data.to_binary_s)
       bytes = @card.transmit(request.to_binary_s)
-      Response.read(bytes)
+      Response.read(bytes).success?
     end
 
     class Request < BinData::Record
