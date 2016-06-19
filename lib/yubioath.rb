@@ -30,8 +30,7 @@ class YubiOATH
     Put.new(@card).call(name: name, secret: secret, algorithm: algorithm, type: type, digits: digits)
   end
 
-  def reset(confirm: false)
-    return false unless confirm
+  def reset
     Reset.new(@card).call
   end
 end
