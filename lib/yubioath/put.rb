@@ -1,6 +1,7 @@
 require 'bindata'
-require 'yubioath'
+require 'yubioath/algorithms'
 require 'yubioath/response'
+require 'yubioath/types'
 
 class YubiOATH
   class Put

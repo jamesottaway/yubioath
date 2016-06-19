@@ -2,8 +2,6 @@ require 'yubioath/instructions'
 
 class YubiOATH
   AID = [0xA0, 0x00, 0x00, 0x05, 0x27, 0x21, 0x01, 0x01]
-  ALGORITHMS = { SHA1: 0x1, SHA256: 0x2 }
-  TYPES = { HOTP: 0x1, TOTP: 0x2 }
 
   def initialize(card)
     @card = card

@@ -1,5 +1,6 @@
 require 'bindata'
-require 'yubioath'
+require 'yubioath/algorithms'
+require 'yubioath/types'
 
 class YubiOATH
   class List
