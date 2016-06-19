@@ -6,7 +6,6 @@ gemspec
 group :development do
   gem 'bundler'
   gem 'rake'
-  gem 'rubocop'
 end
 
 group :test do
