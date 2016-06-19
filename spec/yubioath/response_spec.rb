@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'yubioath/response'
 
 RSpec.describe YubiOATH::Response do

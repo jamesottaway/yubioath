@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'yubioath'
 
 RSpec.describe YubiOATH, :aggregate_failures do
