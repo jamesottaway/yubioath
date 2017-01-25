@@ -12,7 +12,7 @@ class YubiOATH
     def call(name:, secret:, algorithm:, type:, digits:)
       data = Request::Data.new(
         name: name,
-        type: TYPES.fetch(type),
+        oath_type: TYPES.fetch(type),
         algorithm: ALGORITHMS.fetch(algorithm),
         digits: digits,
         secret: secret,
@@ -37,7 +37,7 @@ class YubiOATH
 
         uint8 :key_tag, value: 0x73
         uint8 :key_length, value: -> { secret.length + 2 }
-        bit4 :type
+        bit4 :oath_type
         bit4 :algorithm
         uint8 :digits
         string :secret
