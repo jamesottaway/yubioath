@@ -15,7 +15,7 @@ class YubiOATH
 
       response[:codes].map do |code|
         [code.name, {
-          type: TYPES.key(code.type),
+          type: TYPES.key(code.rtype),
           algorithm: ALGORITHMS.key(code.algorithm),
         }]
       end.to_h
@@ -32,7 +32,7 @@ class YubiOATH
       array :codes, read_until: :eof do
         uint8 :name_tag
         uint8 :name_length
-        bit4 :type
+        bit4 :rtype
         bit4 :algorithm
         string :name, read_length: -> { name_length - 1 }
       end
