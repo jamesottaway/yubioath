@@ -10,7 +10,8 @@ class YubiOATH
 
     def call(select_response:)
       # we need to validate pin
-      pin = STDIN.getpass("Please enter PIN:")
+      pin = STDIN.getpass("Please enter passphrase:")
+      pin = STDIN.getpass("Please enter non-empty passphrase:") while pin.empty?
 
       # derive key from password - salt is name from select response
       key = OpenSSL::PKCS5.pbkdf2_hmac_sha1(pin, select_response.name.to_binary_s, 1000, 16)
